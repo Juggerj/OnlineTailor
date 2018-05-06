@@ -1,0 +1,22 @@
+{% load staticfiles %}
+
+<div class="left pic" onclick="change_recall_base(-1,{{ cur }});">
+    <img src="/media/{{ left.image }}">
+    <div class="shadow"></div>
+</div>
+
+<div class="main pic" onclick="change_recall_base(1,{{ cur }});">
+    <img src="/media/{{ main.image }}">
+</div>
+
+<div class="right pic" onclick="change_recall_base(1,{{ cur }});">
+    <img src="/media/{{ right.image }}">
+    <div class="shadow"></div>
+</div>
+
+<div class="recall_name">
+    <a href="https://www.instagram.com/{{ name }}/">
+        <img src="/media/Img/инст_zv204XT.png">
+        <p>{{ name }}</p>
+    </a>
+</div>

@@ -1,0 +1,16 @@
+{% extends "base.html"%}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    {% include "blocks/header.html" %}
+    {% if  method == 'GET' %}
+        {% include "payments/preorder.html" %}
+    {% else %}
+        {% include "payments/order.html" %}
+    {% endif %}
+
+    {% include "blocks/footer.html" %}
+{% endblock %}

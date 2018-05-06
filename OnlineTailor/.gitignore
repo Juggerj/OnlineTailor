@@ -1,0 +1,5 @@
+/media/
+*.pyc
+/settings_local.py
+/settings_local.rar
+/settings.py

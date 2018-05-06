@@ -1,0 +1,12 @@
+{% load staticfiles %}
+<div class="block" id='recalls'>
+    <div class="header veritcal_sync">
+        <div>
+            <p>{{ Art.Recalls.Header }}</p>
+        </div>
+    </div>
+
+    <div class="all">
+        {% include "blocks/recalls_base.html" %}
+    </div>
+</div>

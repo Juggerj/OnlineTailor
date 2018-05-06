@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<div class="block" id='foryou'>
+
+    <div class="bg">
+        <img src="/media/{{ Pic.ForYou.Main.image }}">
+    </div>
+
+    <div class="header veritcal_sync">
+        <div>
+            <p>{{ Art.ForYou.Header }}</p>
+        </div>
+    </div>
+
+    <div id="foryou-pics">
+        {% for item in Pic.ForYou.Articles %}
+            <div>
+                <img src="/media/{{ item.image }}">
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="foryou-arts">
+        {% for item in Art.ForYou.Articles %}
+            <div>
+                <p>{{ item }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="foryou-button">
+        <a class="button" href="#offer">{{ Art.ForYou.Button }}</a>
+    </div>
+
+</div>

@@ -1,0 +1,26 @@
+<div class="block" id='main'>
+    <div class="bg">
+        <img src="/media/{{ Pic.Main.Background.image }}">
+    </div>
+
+    <div id='main-content-header'>
+        <h2>{{ Art.Main.Header_small }}</h2>
+        <h1>{{ Art.Main.Header }}</h1>
+    </div>
+
+    <div id='main-content'>
+         <div id="main-offer">
+            {% for item in Art.Main.Offer %}
+                <p>{{ item }}</p>
+            {% endfor %}
+
+            <div class="forms subscription-form">
+                <form name="subscription_form" method="post" action="/subscription/" onsubmit="return validate_form();">
+                    {% csrf_token %}
+                    {{ subscribtion_form }}
+                    <input type="submit" class="button " value="{{  Art.Buttons.Bid }}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+
+
+<div class="block" id='program'>
+    <div class="header veritcal_sync">
+        <div>
+            <p>{{ Art.Program.Header }}</p>
+        </div>
+    </div>
+
+    <div class="program">
+        {% for item in DependArt.Topics %}
+            <div class="themes" onclick="them(this)">
+                <p>{{ item.theme }}</p>
+                {% for elem in item.items %}
+                    <p>{{ elem }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="program-bg">
+        <img src="/media/{{ Pic.Program.Background.image }}">
+    </div>
+
+</div>

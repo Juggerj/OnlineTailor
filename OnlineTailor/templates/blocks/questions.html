@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<div class="block" id='questions'>
+
+    <div class="header veritcal_sync">
+        <div>
+            <p>{{ Art.Questions.Header }}</p>
+        </div>
+    </div>
+
+    {% for item in DependArt.Questions %}
+        <div class="question" onclick="quest(this)" id="question_{{ item.ord }}">
+            {% for elem in item.items %}
+                <p>{{ elem }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+</div>

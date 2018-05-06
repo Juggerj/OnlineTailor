@@ -1,0 +1,47 @@
+{% load staticfiles %}
+<div id="footer" class="header">
+
+{#    <div id='footer-social'>#}
+{#        <p>{{ Art.Footer.Call }}</p>#}
+{#    </div>#}
+{##}
+{#    {% include "blocks/social-net.html" %}#}
+{##}
+{#    <div id='footer-contacts'>#}
+{#        <p>{{ Art.Main.Phone }}</p>#}
+{#    </div>#}
+
+    <div>
+        <div class='main-header-logo'>
+            <div>
+                <a href="/">
+                    <img src="/media/{{ Pic.Main.Logo.image }}">
+                </a>
+            </div>
+            <div class="veritcal_sync">
+                <div>
+                    <p>{{ Art.Main.Name1 }}</p>
+                    <p>{{ Art.Main.Name2 }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-description">
+            <p>{{ Art.Footer.Descr }}</p>
+        </div>
+    </div>
+    <div>
+{#        <div id="footer-contacts-phone">#}
+{#            <p>{{ Art.Main.Phone }}</p>#}
+{#        </div>#}
+        <div class="footer-contacts-adr">
+            {% for item in Art.Footer.Left %}
+                <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+        <div class="footer-contacts-adr">
+            {% for item in Art.Footer.Right %}
+                <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>

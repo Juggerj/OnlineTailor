@@ -1,0 +1,23 @@
+{% extends "base.html"%}
+
+{% block onload_script %}
+"change_size('questions');
+    change_size('program');
+    change_size_float('offer-float');
+    change_size('offer');
+    change_recall_base(0,0);"
+{% endblock %}
+
+{% block content %}
+    {% include "blocks/header.html" %}
+    {% include "blocks/main.html" %}
+    {% include "blocks/video.html" %}
+    {% include "blocks/for_you.html" %}
+    {% include "blocks/recalls.html" %}
+    {% include "blocks/about.html" %}
+    {% include "blocks/program.html" %}
+    {% include "blocks/offer.html" %}
+{#    {% include "blocks/schedule.html" %}#}
+    {% include "blocks/questions.html" %}
+    {% include "blocks/footer.html" %}
+{% endblock %}

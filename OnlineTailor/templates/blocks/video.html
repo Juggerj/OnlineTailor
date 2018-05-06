@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<div class="block" id='video'>
+{#    <div class="bg">#}
+{#        <img src="/media/{{ Pic.Main.Background.image }}">#}
+{#    </div>#}
+
+    <div class="header multi-header veritcal_sync">
+        <div>
+            {% for item in Art.Video.Header %}
+                <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="video-movie">
+        <iframe  width="100%" height="100%" src="{{ Art.Video.Link }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+</div>

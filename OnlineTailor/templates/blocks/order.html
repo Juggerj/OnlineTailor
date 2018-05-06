@@ -1,0 +1,30 @@
+<div id="order">
+{#    <form name="ShopForm" method="POST" action="https://money.yandex.ru/eshop.xml">#}
+    <form name="ShopForm" method="POST" action="https://demomoney.yandex.ru/eshop.xml">
+        <ul >
+            <li >
+                <p>Сумма заказа:</p>
+                <p>{{ form.sum.value }}</p>
+            </li>
+
+            {{ form.as_ul }}
+
+{#            <li >#}
+{#                <label for="{{ form.paymentType.id_for_label }}">{{ form.paymentType.label }}</label>#}
+{#                {{ form.paymentType }}#}
+{#            </li>#}
+{#            <li >#}
+{#                <label for="{{ form.cps_email.id_for_label }}">{{ form.cps_email.label }}</label>#}
+{#                {{ form.cps_email }}#}
+{#            </li>#}
+{#            <li >#}
+{#                <label for="{{ form.cps_phone.id_for_label }}">{{ form.cps_phone.label }}</label>#}
+{#                {{ form.cps_phone }}#}
+{#            </li>#}
+{##}
+            <li >
+                <input class="button" type="submit" value="Оплатить">
+            </li>
+        </ul>
+    </form>
+</div>

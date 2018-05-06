@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<div class="block" id='offer'>
+
+    <div class="header multi-header veritcal_sync">
+        <div>
+            {% for item in Art.Offer.Header %}
+                <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="offer-float">
+        <div class="offer-deals">
+            <div>
+               {% for item in Art.Offer.Minimal %}
+                 <p>{{ item }}</p>
+               {% endfor %}
+            </div>
+            <div >
+                <a href="/payment-form/{{ Art.Offer.Minimal_good }}" class="button">{{ Art.Buttons.Want }}</a>
+            </div>
+        </div>
+
+        <div class="offer-deals">
+            <div>
+               {% for item in Art.Offer.Standart %}
+                 <p>{{ item }}</p>
+               {% endfor %}
+            </div>
+            <div >
+                <a href="/payment-form/{{ Art.Offer.Standart_good }}" class="button">{{ Art.Buttons.Want }}</a>
+            </div>
+        </div>
+
+        <div class="offer-deals">
+            <div>
+               {% for item in Art.Offer.Maximum %}
+                 <p>{{ item }}</p>
+               {% endfor %}
+            </div>
+            <div >
+                <a href="/payment-form/{{ Art.Offer.Maximum_good }}" class="button">{{ Art.Buttons.Want }}</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div id="order">
+{#    <form name="ShopForm" method="POST" action="https://money.yandex.ru/eshop.xml">#}
+{#    <form name="ShopForm" method="POST" action="https://demomoney.yandex.ru/eshop.xml" onsubmit="SendGet()">#}
+    <form name="ShopForm" method="POST" action="">
+        <ul >
+            {{ form.as_ul}}
+
+            <li >
+                <input class="button" type="submit" value="Оплатить" >
+            </li>
+        </ul>
+    </form>
+    <script>
+{#        document.forms.ShopForm.elements.email.value = "aakrisanov@gmail.com";#}
+{#        document.forms.ShopForm.elements.phone.value = "89527378768";#}
+{#        document.forms.ShopForm.elements.name.value = "Антон";#}
+{#        document.forms.ShopForm.submit();#}
+    </script>
+</div>

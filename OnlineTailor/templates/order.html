@@ -1,0 +1,19 @@
+<div id="order" >
+{#    <form name="ShopForm" method="POST" action="https://money.yandex.ru/eshop.xml">#}
+    <form name="subscription_form" method="POST" action="https://demomoney.yandex.ru/eshop.xml">
+        <ul >
+            {{ form.as_ul }}
+            <li >
+                <input class="button" type="submit" value="Оплатить" >
+            </li>
+        </ul>
+    </form>
+    <script>
+{#        document.forms.ShopForm.submit();#}
+    </script>
+</div>
+<div>
+    <p>
+        Вы будете перенаправлены на страницу оплаты.
+    </p>
+</div>

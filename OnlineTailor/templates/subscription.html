@@ -4,6 +4,13 @@
 
 {% endblock %}
 
+{% block onload_script %}
+"
+    change_size_float('offer-float');
+    change_size('offer');
+"
+{% endblock %}
+
 {% block content %}
     {% include "blocks/header.html" %}
     {% include "blocks/subscription.html" %}

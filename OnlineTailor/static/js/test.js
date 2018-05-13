@@ -38,16 +38,19 @@ function change_size(main){
 //    console.log(main);
 //    console.log(el);
 
-    for (var i=0; i< el.children.length; i++){
-        res += Number(getComputedStyle(el.children[i]).height.replace('px',''))
-            +  Number(getComputedStyle(el.children[i]).marginTop.replace('px',''))
-            +  Number(getComputedStyle(el.children[i]).marginBottom.replace('px',''))
-            +  Number(getComputedStyle(el.children[i]).paddingTop.replace('px',''));
-//        console.log(res);
-//        console.log(el.children[i]);
+    try{
+        for (var i=0; i< el.children.length; i++){
+            res += Number(getComputedStyle(el.children[i]).height.replace('px',''))
+                +  Number(getComputedStyle(el.children[i]).marginTop.replace('px',''))
+                +  Number(getComputedStyle(el.children[i]).marginBottom.replace('px',''))
+                +  Number(getComputedStyle(el.children[i]).paddingTop.replace('px',''));
+    //        console.log(res);
+    //        console.log(el.children[i]);
 
-    }
-    el.style.height = (res) + 'px';
+        }
+        el.style.height = (res) + 'px';
+    } catch (e){}
+    return null;
 }
 
 function change_size_float(main){
@@ -66,7 +69,7 @@ function change_size_float(main){
             +  Number(getComputedStyle(el.children[i]).marginBottom.replace('px',''))
             +  Number(getComputedStyle(el.children[i]).paddingTop.replace('px',''));
         }
-
+//        console.log(res);
     }
     el.style.height = (res) + 'px';
 }

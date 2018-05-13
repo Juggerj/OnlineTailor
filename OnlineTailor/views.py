@@ -287,10 +287,11 @@ def success(request):
 @csrf_exempt
 def fail(request):
 
-    params = []
-    if request.method == 'GET':
-        for item in request.GET:
-            params.append([item, request.GET[item]])
+    Pic, Art, DependArt = load_content()
+    # params = []
+    # if request.method == 'GET':
+    #     for item in request.GET:
+    #         params.append([item, request.GET[item]])
 
     try:
         payment = Payments.objects.filter(customer_number=request.POST['customerNumber'],
@@ -300,6 +301,6 @@ def fail(request):
         pass
 
 
-    return render_to_response('payments/fail.html',locals())
+    return render_to_response('fail.html',locals())
 
 

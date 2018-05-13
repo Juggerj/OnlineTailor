@@ -124,12 +124,6 @@ def schedule(request):
 
     return render_to_response('schedule.html',locals())
 
-def offer(request):
-
-    Pic,Art,DependArt = load_content()
-
-    return render_to_response('offer.html',locals())
-
 def recall_base(request, id, cur_id):
     """
     Возвращает заполненную форму для редактирования Пользователя(User) с заданным user_id

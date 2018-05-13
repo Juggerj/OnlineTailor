@@ -6,8 +6,8 @@ class BlockAdmin(admin.ModelAdmin):
     ordering = ['full_name']
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['block', 'short_name','ord','content']
-    list_filter = ['block','short_name']
+    list_display = ['block','ord','content']
+    list_filter = ['block',]
     ordering = ['block','short_name','ord']
 
 class VisitorAdmin(admin.ModelAdmin):

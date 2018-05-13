@@ -13,7 +13,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^recall/(-*\d+)/(-*\d+)$', views.recall_base),
     url(r'^subscription/$', views.subscription),
-    url(r'^offer/$', views.offer),
     url(r'^submit/(-*\d+)$', views.submit),
     url(r'^payment-form/(-*\d+)$', views.order_page),
     url(r'^kassa/payment-aviso/', vw.aviso),

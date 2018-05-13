@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^payment-form/(-*\d+)$', views.order_page),
     url(r'^kassa/payment-aviso/', vw.aviso),
     url(r'^kassa/order-check/', vw.check),
-    url(r'^kassa/success/', vw.success),
-    url(r'^kassa/fail/', vw.fail),
+    url(r'^kassa/success/', views.success),
+    url(r'^kassa/fail/', views.fail),
 ]\
               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
               + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

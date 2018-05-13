@@ -45,9 +45,11 @@
 <body onload={% block onload_script %} {% endblock %}>
     {% include "body_script.html" %}
     <div id="wrapper">
+        {% include "blocks/header.html" %}
         {% block content %}
         {% endblock %}
     </div>
+    {% include "blocks/footer.html" %}
     {% csrf_token %}
     <script>SendPost()</script>
 </body>

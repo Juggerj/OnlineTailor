@@ -11,19 +11,29 @@ from models import Payments
 
 class PrePaymentForm(forms.Form):
 
-    good = forms.CharField(label='Услуга', required=True)
-    sum = forms.FloatField(label='Стоимость', required=True)
+    good = forms.CharField(label='Услуга',
+                           required=True,
+                           widget=forms.TextInput(attrs={'readonly': '1'}))
+    sum = forms.FloatField(label='Стоимость, руб',
+                           required=True,
+                           widget=forms.TextInput(attrs={'readonly': '1'}))
 
-    name = forms.CharField(label='ФИО', required=True, widget=forms.TextInput(attrs={'placeholder': 'Фамилия Имя Отчество'}))
-    email = forms.EmailField(label = 'Email', max_length= 100, required=True,
-                              widget=forms.TextInput(attrs={'placeholder': 'Ваш Email',
-                                                            'pattern': '^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$',
-                                                            'title': 'Вы неверно ввели номер мобильного телефона, повторите ввод в формате info@gmail.com'}))
-    phone = forms.CharField(label = 'Номер телефона', max_length= 100, required=True,
-                              widget=forms.TextInput(attrs={'placeholder': '8(XXX)XXX-XX-XX',
-                                                            'pattern': '^8\(\d{3}\)\d{3}-\d{2}-\d{2}$',
-                                                            'id': 'phone',
-                                                            'title': 'Введите номер телефона'}))
+    name = forms.CharField(label='ФИО',
+                           required=True,
+                           widget=forms.TextInput(attrs={'placeholder': 'Фамилия Имя Отчество'}))
+    email = forms.EmailField(label = 'Email',
+                             max_length= 100,
+                             required=True,
+                             widget=forms.TextInput(attrs={'placeholder': 'Ваш Email',
+                                                           'pattern': '^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$',
+                                                           'title': 'Вы неверно ввели номер мобильного телефона, повторите ввод в формате info@gmail.com'}))
+    phone = forms.CharField(label = 'Номер телефона',
+                            max_length= 100,
+                            required=True,
+                            widget=forms.TextInput(attrs={'placeholder': '8(XXX)XXX-XX-XX',
+                                                          'pattern': '^8\(\d{3}\)\d{3}-\d{2}-\d{2}$',
+                                                          'id': 'phone',
+                                                          'title': 'Введите номер телефона'}))
 
     # paymentType = forms.CharField(label='Способ оплаты',
     #                               widget=forms.Select(choices=Payments.PAYMENT_TYPE.CHOICES),

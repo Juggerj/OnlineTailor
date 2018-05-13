@@ -40,8 +40,16 @@
   font-family: "PFCentroSansPro";
 }
 
+html, body{
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
 #wrapper{
-//  background: lightseagreen;
+//  margin: 0 auto @base-header-height * 1.3;
+  height: auto;
+  display: table-row;
 }
 
 .veritcal_sync{
@@ -685,15 +693,16 @@
 #order{
   width: @base-width / 2;
   margin: 0 auto;
+  padding-top: @base-unit * 3;
 //  border: 5px solid red;
-  height: @base-block-height - @base-header-height;
+  height: @base-block-height - @base-header-height * 3 / 2;
 
   li{
     list-style-type:none;
     width: @base-width;
 
     label,p{
-      padding: @base-unit/2;
+      padding: @base-unit/2 ;
       width: @base-width / 4 - @base-unit;
       display: inline-block;
 //      border: 5px solid red;
@@ -701,6 +710,7 @@
     }
     input[type='email'],input[type='text'],select {
       display: inline-block;
+      padding: 0 @base-unit;
       width: @base-width / 2 - @base-unit * 2;
 //      border: 5px solid greenyellow;
       font-size: @base-unit * 1.4;
@@ -722,6 +732,9 @@
 #footer{
   height: @base-header-height * 1.3;
   padding-top: @base-unit;
+  display: table-row;
+//  position: fixed; /* Фиксированное положение */
+//  left: 0; bottom: 0; /* Левый нижний угол */
 
   .main-header-logo{
     width: @base-width;
@@ -863,5 +876,15 @@
     height: @base-block-height - @base-header-height;
     width: (@base-block-height - @base-header-height) / 9 * 15.99;
     margin: 0 auto;
+  }
+}
+
+#success{
+  height: @base-block-height - @base-header-height * 2;
+
+  >p{
+    margin: @base-unit 0;
+    font-size: @base-unit * 2;
+    text-align: center;
   }
 }

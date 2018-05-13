@@ -112,34 +112,6 @@ def check(request):
     return render_to_response('payments/check.html',locals())
 
 @csrf_exempt
-def success(request):
-
-    params = []
-    if request.method == 'GET':
-        for item in request.GET:
-            params.append([item, request.GET[item]])
-
-    return render_to_response('payments/success.html',locals())
-
-@csrf_exempt
-def fail(request):
-
-    params = []
-    if request.method == 'GET':
-        for item in request.GET:
-            params.append([item, request.GET[item]])
-
-    try:
-        payment = Payments.objects.filter(customer_number=request.POST['customerNumber'],
-                  order_number=request.POST['orderNumber']).update(status='fail')
-        payment.save()
-    except:
-        pass
-
-
-    return render_to_response('payments/fail.html',locals())
-
-@csrf_exempt
 def processed(request):
 
     if request.method == 'POST':

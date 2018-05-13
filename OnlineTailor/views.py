@@ -265,7 +265,6 @@ def order_page(request, id):
 
     return response
 
-
 def submit(request, auth_code):
 
     Pic,Art,DependArt = load_content()
@@ -273,4 +272,34 @@ def submit(request, auth_code):
     p = Lead.objects.filter(auth_code=auth_code).update(type = Lead.LEAD_TYPE.SUBSCRIBE)
 
     return render_to_response('submit.html',locals())
+
+@csrf_exempt
+def success(request):
+
+    Pic, Art, DependArt = load_content()
+    # params = []
+    # if request.method == 'GET':
+    #     for item in request.GET:
+    #         params.append([item, request.GET[item]])
+
+    return render_to_response('success.html',locals())
+
+@csrf_exempt
+def fail(request):
+
+    params = []
+    if request.method == 'GET':
+        for item in request.GET:
+            params.append([item, request.GET[item]])
+
+    try:
+        payment = Payments.objects.filter(customer_number=request.POST['customerNumber'],
+                  order_number=request.POST['orderNumber']).update(status='fail')
+        payment.save()
+    except:
+        pass
+
+
+    return render_to_response('payments/fail.html',locals())
+
 

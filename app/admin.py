@@ -12,6 +12,7 @@ class PaymentsAdmin(admin.ModelAdmin):
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('name','phone','email')
+    ordering = ['-id']
 
 class LeadAdmin(admin.ModelAdmin):
     list_display = ['time','type','customer_id','payment_id']

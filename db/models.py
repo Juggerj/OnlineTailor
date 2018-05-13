@@ -4,13 +4,14 @@ from django.db import models
 from django.utils import timezone
 
 class Block(models.Model):
-    short_name = models.CharField(max_length=200,default='', verbose_name= 'Краткое описание', blank=True, null=True)
+    short_name = models.CharField(max_length=200,default='', verbose_name= 'Краткое описание (англ без пробелов)', blank=True, null=True)
+    full_name = models.CharField(max_length=200,default='', verbose_name= 'Полное описание', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Блок'
         verbose_name_plural = 'Блоки'
     def __unicode__(self):
-        return '%s' % (self.short_name)
+        return '%s' % (self.full_name)
 
 class Article(models.Model):
     short_name = models.CharField(max_length=200,default='', verbose_name= 'Краткое описание', blank=True, null=True)

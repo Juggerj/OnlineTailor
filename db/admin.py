@@ -2,8 +2,8 @@ from django.contrib import admin
 from db.models import *
 
 class BlockAdmin(admin.ModelAdmin):
-    list_display = ['short_name']
-    ordering = ['short_name']
+    list_display = ['full_name','short_name',]
+    ordering = ['full_name']
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ['block', 'short_name','ord','content']

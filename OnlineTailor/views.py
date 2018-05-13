@@ -101,8 +101,6 @@ def index(request):
 
     address = 'made-fashion.ru'
 
-    print request.COOKIES
-
     if 'user_id' in request.COOKIES:
         try:
             customer = Customer.objects.get(id=request.COOKIES['user_id'])
@@ -226,7 +224,7 @@ def subscription(request):
                                         customer_id=customer,
                                         auth_code=c_code)
                 p.save()
-                Sender(customer.email,c_code,address)
+                # Sender(customer.email,c_code,address)
 
                 response = render_to_response('subscription.html',locals())
                 response.set_cookie( 'user_id', customer.id)

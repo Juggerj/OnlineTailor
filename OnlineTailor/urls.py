@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^kassa/order-check/', vw.check),
     url(r'^kassa/success/', views.success),
     url(r'^kassa/fail/', views.fail),
+
 ]\
               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
               + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

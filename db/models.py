@@ -29,9 +29,8 @@ class Picture(models.Model):
 
     short_name = models.CharField(max_length=200,default='', verbose_name= 'Краткое описание', blank=True, null=True)
     description = models.TextField(max_length=5000,default='', verbose_name= 'Контент', blank=True, null=True)
-    image = models.ImageField(upload_to='Img/',default='', verbose_name = 'Изображение')
-    block = models.ForeignKey(Block,default='',verbose_name= 'Блок', on_delete=models.CASCADE)
-
+    image = models.ImageField(upload_to='Img/', default='', verbose_name='Изображение')
+    block = models.ForeignKey(Block,default='', verbose_name='Блок', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Картинка'

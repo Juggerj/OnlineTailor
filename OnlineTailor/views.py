@@ -8,21 +8,24 @@ from django.http import HttpRequest, HttpResponseRedirect, JsonResponse, HttpRes
 from django.template.context_processors import csrf
 from db.models import *
 from app.models import *
-from app.views import order,preOrder
+from app.views import order, preOrder
 from app.forms import PrePaymentForm
 from forms import *
+import datetime
 import json
-
 
 from django.core.mail import send_mail
 import re
 
-def Sender(adr,code,address):
+
+def Sender(adr, code, address):
     print 'send mail'
     send_mail(u'Подтверждение подски ' + address,
-              u'Здравствуйте!\nДля подтверждения подписки пройдите по ссылке ниже:\n\nhttp://'+address+'/submit/'+str(code),
+              u'Здравствуйте!\nДля подтверждения подписки пройдите по ссылке ниже:\n\nhttp://' + address + '/submit/' + str(
+                  code),
               'Inform@shit-modno.ru',
-              [adr] )
+              [adr])
+
 
 def load_content():
     Pic = {}
@@ -42,12 +45,12 @@ def load_content():
                 Pic[pics[i].block.short_name][pics[i].short_name].append(pics[i])
 
     Art = {}
-    arts = Article.objects.filter().order_by('block','short_name','ord')
+    arts = Article.objects.filter().order_by('block', 'short_name', 'ord')
     for i in xrange(len(arts)):
         # если нет такого блока - добавь
         if arts[i].block.short_name not in Art.keys():
             Art[arts[i].block.short_name] = {}
-        # если нет такого подблока - добавь и сунь ему один конкретный элемент иначе проверь массив
+            # если нет такого подблока - добавь и сунь ему один конкретный элемент иначе проверь массив
         if arts[i].short_name not in Art[arts[i].block.short_name].keys():
             Art[arts[i].block.short_name][arts[i].short_name] = arts[i].content
         else:
@@ -57,17 +60,17 @@ def load_content():
             else:
                 Art[arts[i].block.short_name][arts[i].short_name].append(arts[i].content)
 
-    good = Goods.objects.get_or_create(name__exact = Art['Offer']['Maximum'][0])
+    good = Goods.objects.get_or_create(name__exact=Art['Offer']['Maximum'][0])
 
     Art['Offer']['Maximum'].append(str(good[0].price) + ' рублей')
     Art['Offer']['Maximum_good'] = good[0].id
 
-    good = Goods.objects.get_or_create(name__exact = Art['Offer']['Standart'][0])
+    good = Goods.objects.get_or_create(name__exact=Art['Offer']['Standart'][0])
 
     Art['Offer']['Standart'].append(str(good[0].price) + ' рублей')
     Art['Offer']['Standart_good'] = good[0].id
 
-    good = Goods.objects.get_or_create(name__exact = Art['Offer']['Minimal'][0])
+    good = Goods.objects.get_or_create(name__exact=Art['Offer']['Minimal'][0])
 
     Art['Offer']['Minimal'].append(str(good[0].price) + ' рублей')
     Art['Offer']['Minimal_good'] = good[0].id
@@ -76,26 +79,28 @@ def load_content():
 
     DependArt['Questions'] = []
     for i in xrange(len(Art['Questions']['Question'])):
-        DependArt['Questions'].append({'ord': i, 'items': [Art['Questions']['Question'][i], Art['Questions']['Answer'][i]]})
+        DependArt['Questions'].append(
+            {'ord': i, 'items': [Art['Questions']['Question'][i], Art['Questions']['Answer'][i]]})
 
     DependArt['Topics'] = []
 
-    topics = Article.objects.filter(short_name__exact='Topic',block__exact=Block.objects.filter(short_name__exact = 'Program')).order_by('ord')
-
+    topics = Article.objects.filter(short_name__exact='Topic',
+                                    block__exact=Block.objects.filter(short_name__exact='Program')).order_by('ord')
 
     for item in topics:
         # print item.ord, item.content
 
-        subtopics = Article.objects.filter(short_name__exact = 'Subtopic', ord__exact = item.ord,
-                                           block__exact = Block.objects.filter(short_name__exact = 'Program').order_by('content'))
-        DependArt['Topics'].append({'theme':item.content,'items':[x.content for x in subtopics]})
+        subtopics = Article.objects.filter(short_name__exact='Subtopic', ord__exact=item.ord,
+                                           block__exact=Block.objects.filter(short_name__exact='Program').order_by(
+                                               'content'))
+        DependArt['Topics'].append({'theme': item.content, 'items': [x.content for x in subtopics]})
 
-    return Pic,Art,DependArt
+    return Pic, Art, DependArt
+
 
 @csrf_exempt
 def index(request):
-
-    Pic,Art,DependArt = load_content()
+    Pic, Art, DependArt = load_content()
 
     abouts = Visitor.objects.filter()
 
@@ -115,41 +120,41 @@ def index(request):
     else:
         subscribtion_form = MainForm()
 
+    return render_to_response('index.html', locals())
 
-    return render_to_response('index.html',locals())
 
 def schedule(request):
+    Pic, Art, DependArt = load_content()
 
-    Pic,Art,DependArt = load_content()
+    return render_to_response('schedule.html', locals())
 
-    return render_to_response('schedule.html',locals())
 
 def recall_base(request, id, cur_id):
     """
     Возвращает заполненную форму для редактирования Пользователя(User) с заданным user_id
     """
-    pics = Picture.objects.filter(block__exact = Block.objects.filter(short_name__exact = 'Recalls')[0].id)
+    pics = Picture.objects.filter(block__exact=Block.objects.filter(short_name__exact='Recalls')[0].id)
 
-    arts = Article.objects.filter(short_name__exact = 'recall', block__exact = Block.objects.filter(short_name__exact = 'Recalls')[0].id)
+    arts = Article.objects.filter(short_name__exact='recall',
+                                  block__exact=Block.objects.filter(short_name__exact='Recalls')[0].id)
 
     res = [int(cur_id) + int(id) - 1, int(cur_id) + int(id), int(cur_id) + int(id) + 1]
 
     if res[1] < 0:
-        res[1] = len(pics)-1
-        res[0] = len(pics)-2
+        res[1] = len(pics) - 1
+        res[0] = len(pics) - 2
     elif res[0] < 0:
-        res[0] = len(pics)-1
+        res[0] = len(pics) - 1
 
-    if res[1] > len(pics)-1:
+    if res[1] > len(pics) - 1:
         res[1] = 0
         res[2] = 1
-    elif res[2] > len(pics)-1:
+    elif res[2] > len(pics) - 1:
         res[2] = 0
 
     # print res
 
     if request.is_ajax():
-
         context = {'left': pics[res[0]],
                    'main': pics[res[1]],
                    'right': pics[res[2]],
@@ -160,6 +165,7 @@ def recall_base(request, id, cur_id):
         data = {'errors': False, 'html': html}
         return JsonResponse(data)
 
+
 @csrf_exempt
 def catch_visitor(request):
     context = {}
@@ -167,33 +173,33 @@ def catch_visitor(request):
     if request.is_ajax():
         if request.method == 'POST':
             try:
-                src = re.search('://((\w|[^/])*)/',request.POST.dict()['ref']).group(1)
+                src = re.search('://((\w|[^/])*)/', request.POST.dict()['ref']).group(1)
             except:
                 src = 'Прямой вход'
             try:
-                item = Visitor(remote_adr = request.POST.dict()['addr'],
-                               city = request.POST.dict()['city'],
-                               region = request.POST.dict()['region'],
-                               time_zone = request.POST.dict()['time_zone'],
-                               refer = request.POST.dict()['ref'],
-                               browser = request.POST.dict()['browser'],
-                               version = request.POST.dict()['version'],
-                               device = request.POST.dict()['device'],
-                               os = request.POST.dict()['os'],
-                               time = timezone.now(),
-                               source = src)
+                item = Visitor(remote_adr=request.POST.dict()['addr'],
+                               city=request.POST.dict()['city'],
+                               region=request.POST.dict()['region'],
+                               time_zone=request.POST.dict()['time_zone'],
+                               refer=request.POST.dict()['ref'],
+                               browser=request.POST.dict()['browser'],
+                               version=request.POST.dict()['version'],
+                               device=request.POST.dict()['device'],
+                               os=request.POST.dict()['os'],
+                               time=timezone.now(),
+                               source=src)
                 item.save()
             except:
                 pass
 
         html = loader.render_to_string('index.html', context)
-        data = {'errors': False, 'html':html}
+        data = {'errors': False, 'html': html}
         return JsonResponse(data)
+
 
 @csrf_exempt
 def subscription(request):
-
-    Pic,Art,DependArt = load_content()
+    Pic, Art, DependArt = load_content()
 
     abouts = Visitor.objects.filter()
 
@@ -209,7 +215,6 @@ def subscription(request):
                                                           email=subscribtion_form.cleaned_data['email'],
                                                           phone=subscribtion_form.cleaned_data['phone'])[0]
 
-
                 c_code = u''
                 for y in [str(randint(0, 9)) for x in range(50)]:
                     c_code += y
@@ -218,20 +223,21 @@ def subscription(request):
                                         customer_id=customer,
                                         auth_code=c_code)
                 p.save()
-                Sender(customer.email,c_code,address)
+                Sender(customer.email, c_code, address)
 
-                response = render_to_response('subscription.html',locals())
-                response.set_cookie( 'user_id', customer.id)
+                response = render_to_response('subscription.html', locals())
+                response.set_cookie('user_id', customer.id)
             except:
-                response = render_to_response('subscription.html',locals())
+                response = render_to_response('subscription.html', locals())
     else:
-        response = render_to_response('index.html',locals())
+        response = render_to_response('index.html', locals())
 
     return response
 
+
 @csrf_exempt
 def order_page(request, id):
-    Pic,Art,DependArt = load_content()
+    Pic, Art, DependArt = load_content()
 
     method = request.method
 
@@ -244,49 +250,52 @@ def order_page(request, id):
         preOrderForm = PrePaymentForm(request.POST, request.COOKIES)
 
         if preOrderForm.is_valid():
-
             ym_merchant = {"customerContact": preOrderForm.cleaned_data['email'],
-                   "taxSystem": '6',
-                   "items": [{"quantity": 1,
-                             "price": {"amount": preOrderForm.cleaned_data['sum']},
-                             "tax": 1,
-                             "text": preOrderForm.cleaned_data['good']},]}
+                           "taxSystem": '6',
+                           "items": [{"quantity": 1,
+                                      "price": {"amount": preOrderForm.cleaned_data['sum']},
+                                      "tax": 1,
+                                      "text": preOrderForm.cleaned_data['good']}, ]}
 
-            dt={'id':id,
-                'name': preOrderForm.cleaned_data['name'],
-                'email': preOrderForm.cleaned_data['email'],
-                'phone': preOrderForm.cleaned_data['phone'],
-                'ym_merchant_receipt':json.dumps(ym_merchant)}
+            dt = {'id': id,
+                  'name': preOrderForm.cleaned_data['name'],
+                  'email': preOrderForm.cleaned_data['email'],
+                  'phone': preOrderForm.cleaned_data['phone'],
+                  'ym_merchant_receipt': json.dumps(ym_merchant)}
             print dt
-            customer_id,form = order(dt)
+            customer_id, form = order(dt)
 
         response = render_to_response('order_page.html', locals())
-        response.set_cookie( 'user_id', customer_id)
+        response.set_cookie('user_id', customer_id)
 
     return response
 
+
 def submit(request, auth_code):
+    Pic, Art, DependArt = load_content()
 
-    Pic,Art,DependArt = load_content()
+    p = Lead.objects.filter(auth_code=auth_code).update(type=Lead.LEAD_TYPE.SUBSCRIBE)
 
-    p = Lead.objects.filter(auth_code=auth_code).update(type = Lead.LEAD_TYPE.SUBSCRIBE)
+    send_mail('Подтверждена подписка',
+              'Inform@shit-modno.ru',
+              ['a.a.krisanov@gmail.com', 'fey845@gmail.com'])
 
-    return render_to_response('submit.html',locals())
+    return render_to_response('submit.html', locals())
+
 
 @csrf_exempt
 def success(request):
-
     Pic, Art, DependArt = load_content()
-    # params = []
-    # if request.method == 'GET':
-    #     for item in request.GET:
-    #         params.append([item, request.GET[item]])
 
-    return render_to_response('success.html',locals())
+    send_mail('Пришел платеж',
+              'Inform@shit-modno.ru',
+              ['a.a.krisanov@gmail.com', 'fey845@gmail.com'])
+
+    return render_to_response('success.html', locals())
+
 
 @csrf_exempt
 def fail(request):
-
     params = []
     if request.method == 'GET':
         for item in request.GET:
@@ -294,12 +303,11 @@ def fail(request):
 
     try:
         payment = Payments.objects.filter(customer_number=request.POST['customerNumber'],
-                  order_number=request.POST['orderNumber']).update(status='fail')
+                                          order_number=request.POST['orderNumber']).update(status='fail')
         payment.save()
     except:
         pass
 
-
-    return render_to_response('payments/fail.html',locals())
+    return render_to_response('payments/fail.html', locals())
 
 

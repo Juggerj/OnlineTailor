@@ -115,7 +115,6 @@ def check(request):
 def processed(request):
 
     if request.method == 'POST':
-
         payment = Payments.objects.filter(customer_number=request.POST['customerNumber'],
                   order_number=request.POST['orderNumber']).update(cps_email=request.POST['cps_email'],cps_phone=request.POST['cps_phone'])
 

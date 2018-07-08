@@ -229,7 +229,14 @@ def subscription(request):
             except:
                 response = render_to_response('subscription.html', locals())
         else:
-            response = HttpResponseRedirect('/', locals())
+            try:
+                customer = Customer.objects.get_or_create(name=subscribtion_form.cleaned_data['name'],
+                                                          email=subscribtion_form.cleaned_data['email'],
+                                                          phone=subscribtion_form.cleaned_data['phone'])[0]
+                response = HttpResponseRedirect('/', locals())
+                response.set_cookie('user_id', customer.id)
+            except:
+                response = HttpResponseRedirect('/', locals())
     else:
         response = render_to_response('index.html', locals())
 
@@ -294,9 +301,9 @@ def submit(request, auth_code):
                       'Телефон: ' + lead.customer_id.phone + '\n' + \
                       'Email: ' + lead.customer_id.email
         except:
-            message = 'Неизвестный пользователь подтвердил подписку(не нашел пользователя по коду)'
+            message = u'Неизвестный пользователь подтвердил подписку, для уточнения зайдите в админку (не нашел пользователя по коду)'
 
-    send_mail('Покупатель подтвержил подписку',
+    send_mail('Покупатель подтвержил подписку на сайте made-fashion.ru',
               message,
               'info@made-fashion.ru',
               ['a.a.krisanov@gmail.com', 'fey845@gmail.com'])
@@ -317,7 +324,7 @@ def success(request):
                       'Телефон: ' + customer.phone + '\n' + \
                       'Email: ' + customer.email
         except:
-            message = 'Неизвестный пользователь подтвердил подписку(пустые куки)'
+            message = u'Неизвестный пользователь отправил платеж, для уточнения зайдите в админку (пустые куки)'
 
     send_mail('Пришел платеж c сайта made-fashion.ru',
               message,

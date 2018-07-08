@@ -10,7 +10,6 @@ from models import Payments
 
 
 class PrePaymentForm(forms.Form):
-
     good = forms.CharField(label='Услуга',
                            required=True,
                            widget=forms.TextInput(attrs={'readonly': '1'}))
@@ -21,24 +20,29 @@ class PrePaymentForm(forms.Form):
     name = forms.CharField(label='ФИО',
                            required=True,
                            widget=forms.TextInput(attrs={'placeholder': 'Фамилия Имя Отчество'}))
-    email = forms.EmailField(label = 'Email',
-                             max_length= 100,
+    email = forms.EmailField(label='Email',
+                             max_length=100,
                              required=True,
                              widget=forms.TextInput(attrs={'placeholder': 'Ваш Email',
                                                            'pattern': '^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$',
                                                            'title': 'Вы неверно ввели номер мобильного телефона, повторите ввод в формате info@gmail.com'}))
-    phone = forms.CharField(label = 'Номер телефона',
-                            max_length= 100,
+    phone = forms.CharField(label='Номер телефона',
+                            max_length=100,
                             required=True,
                             widget=forms.TextInput(attrs={'placeholder': '8(XXX)XXX-XX-XX',
                                                           'pattern': '^8\(\d{3}\)\d{3}-\d{2}-\d{2}$',
                                                           'id': 'phone',
                                                           'title': 'Введите номер телефона'}))
 
+    agreement = forms.BooleanField(required=True,
+                                   initial=True,
+                                   widget=forms.CheckboxInput(attrs={'class': 'checkbox'}))
+
     # paymentType = forms.CharField(label='Способ оплаты',
     #                               widget=forms.Select(choices=Payments.PAYMENT_TYPE.CHOICES),
     #                               min_length=2, max_length=2,
     #                               initial=Payments.PAYMENT_TYPE.AC)
+
 
 class BasePaymentForm(forms.Form):
     """
@@ -130,8 +134,8 @@ class BasePaymentForm(forms.Form):
     def clean_scid(self):
         scid = self.cleaned_data['scid']
         if (
-            scid != settings.YANDEX_MONEY_SCID and
-            not scid in Payments.get_used_scids()
+                    scid != settings.YANDEX_MONEY_SCID and
+                not scid in Payments.get_used_scids()
         ):
             raise forms.ValidationError(self.error_messages[self.ERROR_MESSAGE_CODES.BAD_SCID])
         return scid
@@ -139,8 +143,8 @@ class BasePaymentForm(forms.Form):
     def clean_shopId(self):
         shop_id = self.cleaned_data['shopId']
         if (
-            shop_id != settings.YANDEX_MONEY_SHOP_ID and
-            not shop_id in Payments.get_used_shop_ids()
+                    shop_id != settings.YANDEX_MONEY_SHOP_ID and
+                not shop_id in Payments.get_used_shop_ids()
         ):
             raise forms.ValidationError(self.error_messages[self.ERROR_MESSAGE_CODES.BAD_SHOP_ID])
         return shop_id
@@ -185,7 +189,7 @@ class PaymentForm(BasePaymentForm):
                 self.fields['ym_merchant_receipt'].initial = instance.ym_merchant_receipt
 
     def get_display_field_names(self):
-        return [ 'cps_email', 'cps_phone']
+        return ['cps_email', 'cps_phone']
 
 
 class CheckForm(BasePaymentForm):

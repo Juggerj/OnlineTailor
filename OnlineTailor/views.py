@@ -114,7 +114,6 @@ def index(request):
                                                   'phone': customer.phone,
                                                   'email': customer.email})
 
-            print customer.name
         except:
             subscribtion_form = MainForm()
     else:
@@ -229,6 +228,8 @@ def subscription(request):
                 response.set_cookie('user_id', customer.id)
             except:
                 response = render_to_response('subscription.html', locals())
+        else:
+            response = HttpResponseRedirect('/', locals())
     else:
         response = render_to_response('index.html', locals())
 
@@ -276,8 +277,28 @@ def submit(request, auth_code):
 
     p = Lead.objects.filter(auth_code=auth_code).update(type=Lead.LEAD_TYPE.SUBSCRIBE)
 
-    send_mail('Подтверждена подписка',
-              'Inform@shit-modno.ru',
+    message = ''
+
+    if 'user_id' in request.COOKIES:
+        try:
+            customer = Customer.objects.get(id=request.COOKIES['user_id'])
+            message = 'Пользователь: ' + customer.name + '\n' + \
+                      'Телефон: ' + customer.phone + '\n' + \
+                      'Email: ' + customer.email
+        except:
+            message = 'Неизвестный пользователь подтвердил подписку(пустые куки)'
+    else:
+        try:
+            lead = Lead.objects.get(auth_code=auth_code)
+            message = 'Пользователь: ' + lead.customer_id.name + '\n' + \
+                      'Телефон: ' + lead.customer_id.phone + '\n' + \
+                      'Email: ' + lead.customer_id.email
+        except:
+            message = 'Неизвестный пользователь подтвердил подписку(не нашел пользователя по коду)'
+
+    send_mail('Покупатель подтвержил подписку',
+              message,
+              'info@made-fashion.ru',
               ['a.a.krisanov@gmail.com', 'fey845@gmail.com'])
 
     return render_to_response('submit.html', locals())
@@ -287,8 +308,20 @@ def submit(request, auth_code):
 def success(request):
     Pic, Art, DependArt = load_content()
 
-    send_mail('Пришел платеж',
-              'Inform@shit-modno.ru',
+    message = ''
+
+    if 'user_id' in request.COOKIES:
+        try:
+            customer = Customer.objects.get(id=request.COOKIES['user_id'])
+            message = 'Пользователь: ' + customer.name + '\n' + \
+                      'Телефон: ' + customer.phone + '\n' + \
+                      'Email: ' + customer.email
+        except:
+            message = 'Неизвестный пользователь подтвердил подписку(пустые куки)'
+
+    send_mail('Пришел платеж c сайта made-fashion.ru',
+              message,
+              'info@made-fashion.ru',
               ['a.a.krisanov@gmail.com', 'fey845@gmail.com'])
 
     return render_to_response('success.html', locals())

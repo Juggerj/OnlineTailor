@@ -3,8 +3,40 @@
 {#    <form name="ShopForm" method="POST" action="https://demomoney.yandex.ru/eshop.xml" onsubmit="SendGet()">#}
      <form name="subscription_form" method="POST" action="" onsubmit="return validate_form();">
         <ul >
-            {{ form.as_ul}}
-
+            {{ form.non_field_errors }}
+            <li >
+                {{ form.subject.errors }}
+                <label for="id_good">{{ form.good.label }}</label>
+                {{ form.good }}
+            </li>
+            <li >
+                {{ form.subject.errors }}
+                <label for="id_sum">{{ form.sum.label }}</label>
+                {{ form.sum }}
+            </li>
+            <li >
+                {{ form.subject.errors }}
+                <label for="id_name">{{ form.name.label }}</label>
+                {{ form.name }}
+            </li>
+            <li >
+                {{ form.subject.errors }}
+                <label for="id_email">{{ form.email.label }}</label>
+                {{ form.email }}
+            </li>
+            <li >
+                {{ form.phone.errors }}
+                <label for="id_email">{{ form.phone.label }}</label>
+                {{ form.phone }}
+            </li>
+            <li >
+                {{ form.phone.errors }}
+                <label>
+                    {{ form.agreement }}
+                    <span class="checkbox-custom"></span>
+                    <span class="label">Принимаю <a href="#">соглашение пользователя</a></span>
+                </label>
+            </li>
             <li >
                 <input class="button" type="submit" value="Оплатить" >
             </li>

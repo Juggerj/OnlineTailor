@@ -14,11 +14,34 @@
                 <p>{{ item }}</p>
             {% endfor %}
 
-            <div class="forms subscription-form">
+            <div class="forms">
                 <form name="subscription_form" method="post" action="/subscription/" onsubmit="return validate_form();">
                     {% csrf_token %}
-                    {{ subscribtion_form }}
-                    <input type="submit" class="button " value="{{  Art.Buttons.Bid }}"/>
+
+                    <li >
+                        {{ subscribtion_form.subject.errors }}
+                        <label for="id_name">{{ subscribtion_form.name.label }}</label>
+                        {{ subscribtion_form.name }}
+                    </li>
+                    <li >
+                        {{ subscribtion_form.subject.errors }}
+                        {{ subscribtion_form.email }}
+                    </li>
+                    <li >
+                        {{ subscribtion_form.subject.errors }}
+                        {{ subscribtion_form.phone }}
+                    </li>
+                    <li >
+                        {{ subscribtion_form.phone.errors }}
+                        <label>
+                            {{ subscribtion_form.agreement }}
+                            <span class="checkbox-custom"></span>
+                            <span class="label">Принимаю <a href="#">соглашение пользователя</a></span>
+                        </label>
+                    </li>
+                    <li >
+                        <input type="submit" class="button " value="{{  Art.Buttons.Bid }}"/>
+                    </li>
                 </form>
             </div>
         </div>

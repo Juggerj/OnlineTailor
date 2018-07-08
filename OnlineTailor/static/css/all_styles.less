@@ -161,27 +161,89 @@ html, body{
 
 .forms{
   @form-width: @base-width / 3 * 2;
+  padding: 0 5%;
+
+  li{
+    list-style-type:none;
+
+    label{
+      display: none;
+    }
+    input[type='email'],input[type='text'],select {
+      display: inline-block;
+      margin: @base-unit/4 0;
+      padding: @base-unit/4 @base-unit/2;
+      width: 100%;
+//      border: 5px solid greenyellow;
+      font-size: @base-unit * 1.4;
+    }
+
+    select{
+      font-size: @base-unit * 1.4;
+    }
+  }
+
+  li:nth-child(4){
+    /* Скрываем реальный чекбокс */
+    label{
+      display: block;
+//      width: 70%;
+      margin: 0 10%;
+    }
+
+    .checkbox {
+        display: none;
+    }
+    /* Задаем внешний вид для нашего кастомного чекбокса. Все обязательные свойства прокомментированы, остальные же свойства меняйте по вашему усмотрению */
+    .checkbox-custom {
+        position: relative;      /* Обязательно задаем, чтобы мы могли абсолютным образом позиционировать псевдоэлемент внютри нашего кастомного чекбокса */
+        width: 20px;             /* Обязательно задаем ширину */
+        height: 20px;            /* Обязательно задаем высоту */
+        border: 2px solid black;
+        border-radius: 3px;
+    }
+    /* Кастомный чекбокс и лейбл центрируем по вертикали. Если вам это не требуется, то вы можете убрать свойство vertical-align: middle из данного правила, но свойство display: inline-block обязательно должно быть */
+    .checkbox-custom,
+    .label {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    /* Если реальный чекбокс у нас отмечен, то тогда добавляем данный признак и к нашему кастомному чекбоксу  */
+    .checkbox:checked + .checkbox-custom::before {
+        content: "";             /* Добавляем наш псевдоэлемент */
+        display: block;			 /* Делаем его блочным элементом */
+        position: absolute;      /* Позиционируем его абсолютным образом */
+        /* Задаем расстояние от верхней, правой, нижней и левой границы */
+        top: 2px;
+        right: 2px;
+        bottom: 2px;
+        left: 2px;
+        background: green;     /* Добавляем фон. Если требуется, можете поставить сюда картинку в виде "галочки", которая будет символизировать, что чекбокс отмечен */
+        border-radius: 2px;
+    }
+  }
+
+  li:last-child{
+    margin-left:0;
+  }
+
+}
+
+.order-form{
+  @form-width: @base-width / 3 * 2;
 
   padding: @base-unit * 2;
-
-  input[type='text']{
-    display: block;
-    padding: @base-unit;
-    margin-bottom: @base-unit / 2;
-    height: @form-text;
-    width: @base-width;
-    line-height: @form-text;
-    font-size: @form-text;
-    border: 1px solid gray;
-  }
 
   input[type='text']:focus{
   }
 
-  label, ul{
-    display: none;
-    height: 0;
+  .agreement_lbl{
+    display: block;
+    margin-left: @base-unit ;
+    font-size: @base-unit * 0.9;
+    float:left;
   }
+
 }
 
 
@@ -698,20 +760,21 @@ html, body{
   height: @base-block-height - @base-header-height * 3 / 2;
 
   li{
+    margin-left: 15%;
     list-style-type:none;
     width: @base-width;
 
     label,p{
       padding: @base-unit/2 ;
-      width: @base-width / 4 - @base-unit;
+      width: @base-width / 3 ;
       display: inline-block;
 //      border: 5px solid red;
       font-size: @base-unit * 1.4;
     }
     input[type='email'],input[type='text'],select {
       display: inline-block;
-      padding: 0 @base-unit;
-      width: @base-width / 2 - @base-unit * 2;
+      padding: 0 @base-unit/3;
+      width: @base-width / 3 ;
 //      border: 5px solid greenyellow;
       font-size: @base-unit * 1.4;
     }
@@ -721,9 +784,47 @@ html, body{
     }
   }
 
+  li:nth-child(6){
+    /* Скрываем реальный чекбокс */
+    label{
+      width: 70%;
+      margin: 0 10%;
+    }
 
-  li:first-child{
-//    border: 1px solid green;
+    .checkbox {
+        display: none;
+    }
+    /* Задаем внешний вид для нашего кастомного чекбокса. Все обязательные свойства прокомментированы, остальные же свойства меняйте по вашему усмотрению */
+    .checkbox-custom {
+        position: relative;      /* Обязательно задаем, чтобы мы могли абсолютным образом позиционировать псевдоэлемент внютри нашего кастомного чекбокса */
+        width: 20px;             /* Обязательно задаем ширину */
+        height: 20px;            /* Обязательно задаем высоту */
+        border: 2px solid black;
+        border-radius: 3px;
+    }
+    /* Кастомный чекбокс и лейбл центрируем по вертикали. Если вам это не требуется, то вы можете убрать свойство vertical-align: middle из данного правила, но свойство display: inline-block обязательно должно быть */
+    .checkbox-custom,
+    .label {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    /* Если реальный чекбокс у нас отмечен, то тогда добавляем данный признак и к нашему кастомному чекбоксу  */
+    .checkbox:checked + .checkbox-custom::before {
+        content: "";             /* Добавляем наш псевдоэлемент */
+        display: block;			 /* Делаем его блочным элементом */
+        position: absolute;      /* Позиционируем его абсолютным образом */
+        /* Задаем расстояние от верхней, правой, нижней и левой границы */
+        top: 2px;
+        right: 2px;
+        bottom: 2px;
+        left: 2px;
+        background: green;     /* Добавляем фон. Если требуется, можете поставить сюда картинку в виде "галочки", которая будет символизировать, что чекбокс отмечен */
+        border-radius: 2px;
+    }
+  }
+
+  li:last-child{
+    margin-left:0;
   }
 }
 
@@ -797,26 +898,6 @@ html, body{
   >div:first-child{
     margin-left: @base-width / 6 ;
   }
-//  .social-net{
-//    float: left;
-//    margin-left: @base-width / 10;
-//  }
-//
-//  #footer-contacts, #footer-social{
-//    margin-top: @base-header-height / 7;
-//    p{
-//      font-size: @base-unit * 3;
-//      padding-top: 0;
-//    }
-//  }
-//  #footer-contacts{
-//    float: right;
-//    margin-right: @base-width / 10;
-//  }
-//  #footer-social{
-//    float: left;
-//    margin-left: @base-width / 10;
-//  }
 }
 
 //-----------------------------------SUBSCRIBTION----------------------------------------------------
@@ -837,21 +918,6 @@ html, body{
     >p{
       font-size: @base-unit * 2;
       text-align: center;
-    }
-  }
-
-  .subscription-form{
-//    border: 1px solid black;
-    margin: 0 auto;
-    height: @base-header-height;
-    width: @base-width / 16 * 13;
-    input{
-      float: left;
-    }
-
-    input[type='text']{
-      width: @base-width / 5 * 2;
-      margin: @base-unit ;
     }
   }
 
